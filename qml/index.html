@@ -76,10 +76,30 @@
 	}
 
 	map.on('click', onMapClick);
+function a(){
+    var rawFile = new XMLHttpRequest();
+    rawFile.open("GET", "proberen.json", false);
+    rawFile.onreadystatechange = function ()
+    {
+        if(rawFile.readyState === 4)
+        {
+            if(rawFile.status === 200 || rawFile.status == 0)
+            {
+                var allText = rawFile.responseText;
+                document.getElementById("ik").innerHTML = allText;
+            }
+        }
+    }
+    rawFile.send(null);
+}
 
 </script>
 
 
 <h1>tests</h1>
+<span id=ik>a</span>
+<script>
+	a();
+</script>
 </body>
 </html>
