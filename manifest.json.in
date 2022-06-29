@@ -1,0 +1,15 @@
+{
+    "name": "trackmyrun.teteam",
+    "description": "Track My Run",
+    "architecture": "@CLICK_ARCH@",
+    "title": "TrackMyRun",
+    "hooks": {
+        "trackmyrun": {
+            "apparmor": "trackmyrun.apparmor",
+            "desktop":  "trackmyrun.desktop"
+        }
+    },
+    "version": "@BUILD_VERSION@",
+    "maintainer": "T E Team <digitaleservice@gmail.com>",
+    "framework" : "@CLICK_FRAMEWORK@"
+}
