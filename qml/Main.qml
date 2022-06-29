@@ -20,7 +20,7 @@ import Ubuntu.Components 1.3
 import QtQuick.Layouts 1.3
 import Qt.labs.settings 1.0
 import QtWebEngine 1.6
-
+import QtPositioning 5.2
 
 import Example 1.0
 
@@ -43,7 +43,11 @@ MainView {
             subtitle: "Latitude: " 
         }
 
-
+        PositionSource {
+            id: geoposition
+            active: true
+            preferredPositioningMethods: PositionSource.SatellitePositioningMethods
+        }
         WebEngineView {
             id: webEngineView
 
@@ -52,7 +56,7 @@ MainView {
                 topMargin: header.height
             }
 
-            url: "index.html?hoogte=455"
+            url: "index.html?hoogte="+geoposition.position.coordinate.longitude
 
             userScripts: [
                 WebEngineScript {
