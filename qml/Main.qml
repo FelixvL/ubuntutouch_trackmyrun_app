@@ -47,7 +47,7 @@ MainView {
             id: geoposition
             active: true
             preferredPositioningMethods: PositionSource.SatellitePositioningMethods
-            updateInterval:50000
+            updateInterval:1000
         }
         WebChannel {
             id: myWebChannel
@@ -57,8 +57,8 @@ MainView {
         QtObject{
             id: qtObject
 
-//            property double hoogte : Math.floor(geoposition.position.coordinate.longitude,2)
-            property double hoogte : 195   /// doorgegeven waarde naar html
+            property double hoogte : geoposition.position.coordinate.longitude
+//            property double hoogte : 195   /// doorgegeven waarde naar html
         }
         WebEngineView {
             id: webEngineView

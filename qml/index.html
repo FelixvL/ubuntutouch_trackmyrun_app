@@ -97,7 +97,13 @@ function a(){
     }
     rawFile.send(null);
 }
+var getal = 6;
+myObj.hoogteChanged.connect(function(){
+	document.getElementById("ik").innerHTML = "getal:"+getal+">>"+myObj.hoogte;
+	getal++;
 })
+})
+
 </script>
 
 
