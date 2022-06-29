@@ -21,7 +21,7 @@ import QtQuick.Layouts 1.3
 import Qt.labs.settings 1.0
 import QtWebEngine 1.6
 import QtPositioning 5.2
-
+import QtWebChannel  1.0
 import Example 1.0
 
 
@@ -47,16 +47,29 @@ MainView {
             id: geoposition
             active: true
             preferredPositioningMethods: PositionSource.SatellitePositioningMethods
+            updateInterval:50000
+        }
+        WebChannel {
+            id: myWebChannel
+
+
+        }
+        QtObject{
+            id: qtObject
+
+//            property double hoogte : Math.floor(geoposition.position.coordinate.longitude,2)
+            property double hoogte : 195   /// doorgegeven waarde naar html
         }
         WebEngineView {
             id: webEngineView
+            webChannel: myWebChannel 
 
             anchors {
                 fill: parent
                 topMargin: header.height
             }
 
-            url: "index.html?hoogte="+geoposition.position.coordinate.longitude
+            url: "index.html?hoogte=99"
 
             userScripts: [
                 WebEngineScript {
@@ -66,6 +79,9 @@ MainView {
                     worldId: WebEngineScript.UserWorld
                 }
             ]
+        }
+        Component.onCompleted: {
+            myWebChannel.registerObject("qtObject",qtObject);
         }
     }
 }

@@ -10,7 +10,7 @@
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css" integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ==" crossorigin=""/>
     <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js" integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ==" crossorigin=""></script>
-
+	<script type="text/javascript" src="qrc:///qtwebchannel/qwebchannel.js"></script>
 	<style>
 		html, body {
 			height: 100%;
@@ -32,12 +32,16 @@
 
 <div id="map" style="width: 600px; height: 400px;"></div>
 <script>
+new QWebChannel(qt.webChannelTransport, function(channel) {
+    // all published objects are available in channel.objects under
+    // the identifier set in their attached WebChannel.id property
+    var myObj = channel.objects.qtObject;
 
-	const queryString = window.location.search;
-	console.log(queryString);
-	const urlParams = new URLSearchParams(queryString);
-	const product = urlParams.get('hoogte')
-	console.log(product);
+	// const queryString = window.location.search;
+	// console.log(queryString);
+	// const urlParams = new URLSearchParams(queryString);
+	// const product = urlParams.get('a')
+	// console.log(product);
 
 	var map = L.map('map').setView([51.505, -0.09], 13);
 
@@ -54,7 +58,7 @@
 		fillColor: '#f03',
 		fillOpacity: 0.5,
 		radius: 500
-	}).addTo(map).bindPopup('I am a circle.'+product);
+	}).addTo(map).bindPopup('I am a circle.');
 
 	var polygon = L.polygon([
 		[51.509, -0.08],
@@ -65,7 +69,7 @@
 
 	var popup = L.popup()
 		.setLatLng([51.513, -0.09])
-		.setContent('I am a standalone popup.'+product)
+		.setContent('I am a standalone popup.'+myObj.hoogte)
 		.openOn(map);
 
 	function onMapClick(e) {
@@ -87,19 +91,20 @@ function a(){
             {
                 var allText = rawFile.responseText;
                 document.getElementById("ik").innerHTML = allText;
+                document.getElementById("ik").innerHTML += "<br>abc";
             }
         }
     }
     rawFile.send(null);
 }
-
+})
 </script>
 
 
 <h1>tests</h1>
 <span id=ik>a</span>
 <script>
-	a();
+	//a();
 </script>
 </body>
 </html>
