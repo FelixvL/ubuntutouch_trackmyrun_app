@@ -2,5 +2,6 @@
     <qresource prefix="/">
         <file>Main.qml</file>
         <file>index.html</file>
+        <file>proberen.json</file>
     </qresource>
 </RCC>

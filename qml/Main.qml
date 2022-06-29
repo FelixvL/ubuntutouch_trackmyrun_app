@@ -20,8 +20,8 @@ import Ubuntu.Components 1.3
 import QtQuick.Layouts 1.3
 import Qt.labs.settings 1.0
 import QtWebEngine 1.6
-
-
+import QtPositioning 5.2
+import QtWebChannel  1.0
 import Example 1.0
 
 
@@ -43,16 +43,33 @@ MainView {
             subtitle: "Latitude: " 
         }
 
+        PositionSource {
+            id: geoposition
+            active: true
+            preferredPositioningMethods: PositionSource.SatellitePositioningMethods
+            updateInterval:1000
+        }
+        WebChannel {
+            id: myWebChannel
 
+
+        }
+        QtObject{
+            id: qtObject
+
+            property double hoogte : geoposition.position.coordinate.longitude
+//            property double hoogte : 195   /// doorgegeven waarde naar html
+        }
         WebEngineView {
             id: webEngineView
+            webChannel: myWebChannel 
 
             anchors {
                 fill: parent
                 topMargin: header.height
             }
 
-            url: "index.html?hoogte=459"
+            url: "index.html?hoogte=99"
 
             userScripts: [
                 WebEngineScript {
@@ -62,6 +79,9 @@ MainView {
                     worldId: WebEngineScript.UserWorld
                 }
             ]
+        }
+        Component.onCompleted: {
+            myWebChannel.registerObject("qtObject",qtObject);
         }
     }
 }
